@@ -43,7 +43,6 @@ test.describe("API challenge", () => {
         let headers = await response.headers();
         expect(response.status()).toBe(200);
         expect(headers).toEqual(expect.objectContaining({"x-challenger": token}));
-        console.log(token);
         expect(body.challenges.length).toBe(59);
     });
 
@@ -101,8 +100,6 @@ test.describe("API challenge", () => {
                     "description": "test"
                 }
             });
-            let resp = await response.json();
-            console.log(resp);
             expect(response.status()).toBe(201);
         });
 
@@ -113,8 +110,6 @@ test.describe("API challenge", () => {
                     "x-challenger": token,
                 },
             });
-            let resp = await response.json();
-            console.log(resp);
             expect(response.status()).toBe(200);
         });
     });
@@ -141,7 +136,6 @@ test.describe("API challenge", () => {
             }
         });
         let resp = await response.json();
-        console.log(resp);
         expect(response.status()).toBe(400);
         expect(resp.errorMessages).toContain("Failed Validation: doneStatus should be BOOLEAN but was STRING");
     });
@@ -161,7 +155,6 @@ test.describe("API challenge", () => {
             }
         });
         let resp = await response.json();
-        console.log(resp);
         expect(response.status()).toBe(400);
         expect(resp.errorMessages).toContain("Failed Validation: Maximum allowable length exceeded for title - maximum allowed is 50");
     });
@@ -181,7 +174,6 @@ test.describe("API challenge", () => {
             }
         });
         let resp = await response.json();
-        console.log(resp);
         expect(response.status()).toBe(400);
         expect(resp.errorMessages).toContain("Failed Validation: Maximum allowable length exceeded for description - maximum allowed is 200");
     });
@@ -200,8 +192,6 @@ test.describe("API challenge", () => {
                 "description": description
             }
         });
-        let resp = await response.json();
-        console.log(resp);
         expect(response.status()).toBe(201);
     });
 
@@ -221,7 +211,6 @@ test.describe("API challenge", () => {
             }
         });
         let resp = await response.json();
-        console.log(resp);
         expect(response.status()).toBe(413);
         expect(resp.errorMessages).toContain("Error: Request body too large, max allowed is 5000 bytes");
     });
@@ -242,7 +231,6 @@ test.describe("API challenge", () => {
             }
         });
         let resp = await response.json();
-        console.log(resp);
         expect(response.status()).toBe(400);
         expect(resp.errorMessages).toContain("Could not find field: priority");
     });
@@ -261,7 +249,6 @@ test.describe("API challenge", () => {
             }
         });
         let resp = await response.json();
-        console.log(resp);
         expect(response.status()).toBe(400);
         expect(resp.errorMessages).toContain("Cannot create todo with PUT due to Auto fields id");
     });
@@ -277,7 +264,6 @@ test.describe("API challenge", () => {
             }
         });
         let resp = await response.json();
-        console.log(resp);
         expect(response.status()).toBe(200);
         expect(resp.title).toContain("scan paperwork");
     });
@@ -293,7 +279,6 @@ test.describe("API challenge", () => {
             }
         });
         let resp = await response.json();
-        console.log(resp);
         expect(response.status()).toBe(404);
         expect(resp.errorMessages).toContain("No such todo entity instance with id == 1111 found");
     });
@@ -311,7 +296,6 @@ test.describe("API challenge", () => {
             }
         });
         let resp = await response.json();
-        console.log(resp);
         expect(response.status()).toBe(200);
         expect(resp.title).toContain("scan paperwork");
     });
@@ -327,14 +311,11 @@ test.describe("API challenge", () => {
             }
         });
         let resp = await response.json();
-        console.log(resp);
         expect(response.status()).toBe(200);
         expect(resp.title).toContain("scan paperwork");
     });
 
     test("21. Issue a PUT request to fail to update an existing todo because title is missing in payload.", async ({request}) => {
-        const title = 'a'.repeat(50)
-        const description = 'a'.repeat(50)
         const response = await request.put(`${URL}todos/1`, {
             headers: {
                 "x-challenger": token,
@@ -345,7 +326,6 @@ test.describe("API challenge", () => {
             }
         });
         let resp = await response.json();
-        console.log(resp);
         expect(response.status()).toBe(400);
         expect(resp.errorMessages).toContain("title : field is mandatory");
     });
@@ -361,7 +341,6 @@ test.describe("API challenge", () => {
             }
         });
         let resp = await response.json();
-        console.log(resp);
         expect(response.status()).toBe(400);
         expect(resp.errorMessages).toContain("Can not amend id from 1 to 2");
     });
@@ -377,7 +356,6 @@ test.describe("API challenge", () => {
                 data: jsonData
             });
             let resp = await response.json();
-            console.log(resp);
             expect(response.status()).toBe(201);
             todoId = resp.id; // Save the id of the created todo
         });
@@ -407,7 +385,6 @@ test.describe("API challenge", () => {
                 "Content-Type": "application/json"
             },
         });
-        console.log(await response.text());
         expect(response.status()).toBe(200);
     });
 
@@ -419,7 +396,6 @@ test.describe("API challenge", () => {
             },
         });
         const xmlText = await response.text(); // Assign response text to xmlText
-        console.log(xmlText);
         expect(response.status()).toBe(200);
 
         // Parse the XML response
@@ -444,7 +420,6 @@ test.describe("API challenge", () => {
             },
         });
         let resp = await response.json();
-        console.log(resp);
         expect(response.status()).toBe(200);
 
         const todo = resp.todos[0];
@@ -460,7 +435,6 @@ test.describe("API challenge", () => {
             },
         });
         let resp = await response.json();
-        console.log(resp);
         expect(response.status()).toBe(200);
 
         const todo = resp.todos[0];
@@ -477,7 +451,6 @@ test.describe("API challenge", () => {
         });
 
         const xmlText = await response.text(); // Assign response text to xmlText
-        console.log(xmlText);
         expect(response.status()).toBe(200);
 
         // Parse the XML response
@@ -502,7 +475,6 @@ test.describe("API challenge", () => {
             },
         });
         let resp = await response.json();
-        console.log(resp);
         expect(response.status()).toBe(200);
 
         const todo = resp.todos[0];
@@ -518,7 +490,6 @@ test.describe("API challenge", () => {
             },
         });
         let resp = await response.json();
-        console.log(resp);
         expect(response.status()).toBe(406);
         expect(resp.errorMessages).toContain("Unrecognised Accept Type");
     });
@@ -534,7 +505,6 @@ test.describe("API challenge", () => {
         });
 
         const xmlText = await response.text();
-        console.log(xmlText);
         expect(response.status()).toBe(201);
 
         // Parse the XML response
@@ -558,7 +528,6 @@ test.describe("API challenge", () => {
         });
 
         const jsonReso = await response.json();
-        console.log(jsonReso);
         expect(response.status()).toBe(201);
         expect(jsonReso.title).toEqual(expect.any(String));
     });
@@ -574,7 +543,6 @@ test.describe("API challenge", () => {
         });
 
         const jsonResp = await response.json();
-        console.log(jsonResp);
         expect(response.status()).toBe(415);
         expect(jsonResp.errorMessages).toContain("Unsupported Content Type - test");
     });
@@ -589,7 +557,6 @@ test.describe("API challenge", () => {
         });
 
         const jsonResp = await response.json();
-        console.log(jsonResp);
         expect(response.status()).toBe(200);
         expect(typeof jsonResp.challengeStatus.POST_TODOS_415).toBe("boolean");
     });
@@ -605,7 +572,6 @@ test.describe("API challenge", () => {
             });
 
             const jsonResp = await response.json();
-            console.log(jsonResp);
             expect(response.status()).toBe(200);
             expect(typeof jsonResp.challengeStatus.POST_TODOS_415).toBe("boolean");
 
@@ -640,7 +606,6 @@ test.describe("API challenge", () => {
             data: JSON.stringify(data)
         });
         const jsonResp = await response.json();
-        console.log(jsonResp);
         expect(response.status()).toBe(200);
         expect(jsonResp.challengeStatus.PUT_NEW_RESTORED_CHALLENGER_PROGRESS_STATUS).toBe(true);
     });
@@ -653,8 +618,6 @@ test.describe("API challenge", () => {
                 "Content-Type": "application/json"
             }
         });
-        const jsonResp = await response.json();
-        console.log(jsonResp);
         expect(response.status()).toBe(200);
     });
 
@@ -667,7 +630,6 @@ test.describe("API challenge", () => {
             }
         });
         const jsonResp = await response.json();
-        console.log(jsonResp);
         expect(response.status()).toBe(200);
         let modifiedRequest = jsonResp;
         modifiedRequest.todos[0].title = "test";
@@ -695,7 +657,6 @@ test.describe("API challenge", () => {
         });
 
         const jsonResp = await response.json();
-        console.log(jsonResp);
         expect(response.status()).toBe(201);
         expect(jsonResp.title).toEqual(expect.any(String));
     });
@@ -711,7 +672,6 @@ test.describe("API challenge", () => {
         });
 
         const xmlText = await response.text();
-        console.log(xmlText);
         expect(response.status()).toBe(201);
 
         // Parse the XML response
@@ -867,11 +827,9 @@ test.describe("API challenge", () => {
             xAuthToken = headers["x-auth-token"];
             expect(response.status()).toBe(201);
             expect(headers["x-challenger"]).toEqual(token);
-            console.log('xAuthToken is ' + xAuthToken);
         });
 
         await test.step('GET request on the `/secret/note` end point receive 200 when valid X-AUTH-TOKEN', async () => {
-            console.log('xAuthToken is ' + xAuthToken);
             let response = await request.get(`${URL}secret/note`, {
                 headers: {
                     "x-challenger": token,
@@ -880,8 +838,6 @@ test.describe("API challenge", () => {
             });
 
             let headers = response.headers();
-            let body = await response.json();
-            console.log(body);
             expect(response.status()).toBe(200);
             expect(headers["x-challenger"]).toEqual(token);
         });
@@ -900,7 +856,6 @@ test.describe("API challenge", () => {
             xAuthToken = headers["x-auth-token"];
             expect(response.status()).toBe(201);
             expect(headers["x-challenger"]).toEqual(token);
-            console.log('xAuthToken is ' + xAuthToken);
         });
 
         await test.step('GET request on the `/secret/note` end point receive 200 when valid X-AUTH-TOKEN', async () => {
@@ -916,8 +871,6 @@ test.describe("API challenge", () => {
             });
 
             let headers = response.headers();
-            let body = await response.json();
-            console.log(body);
             expect(response.status()).toBe(200);
             expect(headers["x-challenger"]).toEqual(token);
         });
@@ -935,7 +888,6 @@ test.describe("API challenge", () => {
             xAuthToken = headers["x-auth-token"];
             expect(response.status()).toBe(201);
             expect(headers["x-challenger"]).toEqual(token);
-            console.log('xAuthToken is ' + xAuthToken);
         });
 
         await test.step('GET request on the `/secret/note` end point receive 200 when valid X-AUTH-TOKEN', async () => {
@@ -980,7 +932,6 @@ test.describe("API challenge", () => {
             xAuthToken = headers["x-auth-token"];
             expect(response.status()).toBe(201);
             expect(headers["x-challenger"]).toEqual(token);
-            console.log('xAuthToken is ' + xAuthToken);
         });
 
         await test.step('GET request on the `/secret/note` end point receive 200 when valid X-AUTH-TOKEN', async () => {
@@ -1011,7 +962,6 @@ test.describe("API challenge", () => {
             xAuthToken = headers["x-auth-token"];
             expect(response.status()).toBe(201);
             expect(headers["x-challenger"]).toEqual(token);
-            console.log('xAuthToken is ' + xAuthToken);
         });
 
         await test.step('POST                                                                                                                                                                                                                                                                                                    request on the `/secret/note` end point receive 200 when valid X-AUTH-TOKEN', async () => {
@@ -1035,9 +985,7 @@ test.describe("API challenge", () => {
                 "x-challenger": token,
             },
         });
-
         let todos = (await responseTodos.json())['todos'];
-        console.log(todos);
         for (let i = 0; i < todos.length; i++) {
             let idNumber = todos[i]['id'];
             await request.delete(`${URL}todos/${idNumber}`, {
@@ -1045,7 +993,6 @@ test.describe("API challenge", () => {
                     "x-challenger": token,
                 },
             });
-            console.log('Deleted todo with id: ' + idNumber);
         }
 
         // Verify that all todos have been deleted
@@ -1074,8 +1021,6 @@ test.describe("API challenge", () => {
                 },
                 data: todoData
             });
-            const resp = await response.json();
-            console.log(`Created todo with id: ${resp.id}`);
         }
 
         // Verify that 20 todos have been created

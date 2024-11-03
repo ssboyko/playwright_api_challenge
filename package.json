@@ -4,8 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "allureGenerate": "allure generate --clean",
-    "allureOpen": "allure open",
     "test": "npx playwright test"
   },
   "keywords": [],
